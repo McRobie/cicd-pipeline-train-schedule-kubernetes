@@ -45,7 +45,11 @@ pipeline {
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
-                //implement Kubernetes deployment here
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig', //find kubeconfig credential from jenkins
+                    configs: 'train-schedule-kube.yml', //file pattern config files we want to deploy to cluster
+                    enableConfigSubstitution: true //do variable substitution in the .yml file.
+                )
             }
         }
     }
